@@ -1,0 +1,21 @@
+{
+  "name": "tonoman3g/kaskus-php-sdk",
+  "description": "Kaskus SDK for PHP",
+  "keywords": [
+    "kaskus",
+    "sdk"
+  ],
+  "type": "library",
+  "require": {
+    "php": ">=5.4.0"
+  },
+  "require": {
+    "guzzlehttp/guzzle": "5.2.0",
+    "guzzlehttp/oauth-subscriber": "0.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Kaskus\\": "src/Kaskus/"
+    }
+  }
+}
