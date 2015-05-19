@@ -15,7 +15,7 @@ Installation
 ```
 {
   "require": {
-    "tonoman3g/kaskus-php-sdk": "dev-master"
+    "kaskus/kaskus-php-sdk": "dev-master"
   }
 }
 ```
