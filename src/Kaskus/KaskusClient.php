@@ -1,5 +1,4 @@
 <?php
-
 namespace Kaskus;
 
 use GuzzleHttp\Exception\ClientException;
@@ -77,6 +76,4 @@ class KaskusClient extends \GuzzleHttp\Client
 
         throw new KaskusServerException();
     }
-
-
 }
