@@ -16,10 +16,19 @@ class KaskusClient extends \GuzzleHttp\Client
 
     const BASE_URL = 'https://www.kaskus.co.id/api/oauth/';
 
-    public function __construct($consumerKey, $consumerSecret)
+    /**
+     * @var array
+     */
+    protected $oauthConfig;
+
+    protected $unauthenticatedOauthListener;
+
+    protected $authenticatedOauthListener;
+
+    public function __construct($consumerKey, $consumerSecret, $baseUrl = null)
     {
         $config = array(
-            'base_url' => self::BASE_URL,
+            'base_url' => $baseUrl ? $baseUrl : self::BASE_URL,
             'defaults' => array(
                 'auth' => 'oauth',
                 'headers' => array(
@@ -29,13 +38,13 @@ class KaskusClient extends \GuzzleHttp\Client
         );
         parent::__construct($config);
 
-        $oauthConfig = array(
+        $this->oauthConfig = array(
             'consumer_key' => $consumerKey,
             'consumer_secret' => $consumerSecret
         );
 
-        $oauthSubsriber = new Oauth1($oauthConfig);
-        $this->getEmitter()->attach($oauthSubsriber);
+        $this->unauthenticatedOauthListener = new Oauth1($this->oauthConfig);
+        $this->getEmitter()->attach($this->unauthenticatedOauthListener);
     }
 
     public function send(RequestInterface $request)
@@ -45,7 +54,44 @@ class KaskusClient extends \GuzzleHttp\Client
         } catch (RequestException $e) {
             $this->handleException($e);
         }
+    }
 
+    public function setCredentials($tokenKey, $tokenSecret)
+    {
+        $this->getEmitter()->detach($this->unauthenticatedOauthListener);
+        $config = array_merge($this->oauthConfig, array(
+            'token' => $tokenKey,
+            'token_secret' => $tokenSecret
+        ));
+        $this->authenticatedOauthListener = new Oauth1($config);
+        $this->getEmitter()->attach($this->authenticatedOauthListener);
+    }
+
+    public function getRequestToken($callback)
+    {
+        $response = $this->get('token', ['query' => ['oauth_callback' => $callback]]);
+        $tokenResponse = $response->getBody()->getContents();
+        parse_str($tokenResponse, $requestToken);
+
+        return $requestToken;
+    }
+
+    public function getAuthorizeUrl($token)
+    {
+        return $this->getBaseUrl() . '/authorize?token=' . urlencode($token);
+    }
+
+    public function getAccessToken()
+    {
+        if (!$this->authenticatedOauthListener) {
+            throw new KaskusClientException('You have to set credentials with authorized request token!');
+        }
+
+        $response = $this->get('accesstoken');
+        $tokenResponse = $response->getBody()->getContents();
+        parse_str($tokenResponse, $accessToken);
+
+        return $accessToken;
     }
 
     protected function handleException(RequestException $exception)

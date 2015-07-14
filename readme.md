@@ -66,6 +66,12 @@ try {
 
 ```
 
+Login With Kaskus
+-----------------
+
+Use this [Oauth sample](sample/oauth_sample.php)
+
+
 Advance Usage
 -------------
 
