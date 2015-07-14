@@ -15,7 +15,7 @@ Installation
 ```
 {
   "require": {
-    "kaskus/kaskus-php-sdk": "dev-master"
+    "kaskus/kaskus-php-sdk": "v0.2.0"
   }
 }
 ```
@@ -65,6 +65,12 @@ try {
 }
 
 ```
+
+Login With Kaskus
+-----------------
+
+Use this [Oauth sample](sample/oauth_sample.php)
+
 
 Advance Usage
 -------------
