@@ -94,3 +94,25 @@ page : page that we want to read
 limit : post per page that we want to read
 ```
 Get thread detail for certain thread id
+
+
+```
+GET /content/top_thread/{forum_id}
+
+Parameter:
+forum_id : forum id that we want to see the top thread, e.g. 36 (Handphone and tablet)
+
+```
+Get top thread for certain forum.
+
+
+
+```
+GET /mypost/{user_id}
+
+Parameter:
+user_id : user id that we want to see the post list, e.g. 1234
+```
+Get list of user post
+
+
