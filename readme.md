@@ -79,10 +79,13 @@ We use guzzle as HTTP Client, for further usage, read [Guzzle](http://guzzle.rea
 
 Api Documentation
 -----------------
+
+### Get all current hot threads
 ```
 GET /v1/hot_threads
 ```
-Get all current hot threads
+
+### Get thread detail for certain thread id
 
 ```
 GET /v1/thread/<thread_id>?field=thread,thread_id,total_post,current_page,per_page,open,total_page,posts,profilepicture,post_username,post_userid,title,decoded,dateline,profilepicture,usertitle,post_id,reputation_box,pagetext,enable_reputation&page=1&limit=20
@@ -93,8 +96,8 @@ field : fields name separated by comma that we want to filter from response
 page : page that we want to read
 limit : post per page that we want to read
 ```
-Get thread detail for certain thread id
 
+### Get top thread for certain forum.
 
 ```
 GET /content/top_thread/{forum_id}
@@ -103,9 +106,9 @@ Parameter:
 forum_id : forum id that we want to see the top thread, e.g. 36 (Handphone and tablet)
 
 ```
-Get top thread for certain forum.
 
 
+### Get list of user post
 
 ```
 GET /mypost/{user_id}
@@ -113,6 +116,6 @@ GET /mypost/{user_id}
 Parameter:
 user_id : user id that we want to see the post list, e.g. 1234
 ```
-Get list of user post
+
 
 
